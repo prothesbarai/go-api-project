@@ -1,6 +1,8 @@
 package main
 
-import "go-api-project/database"
+import (
+	"go-api-project/database"
+)
 
 func main() {
 	database.ConnectionDB()
