@@ -42,5 +42,6 @@ func ConnectionDB(){
 	db.SetMaxIdleConns(25) // >> idle connection pool. মানে: idle (unused) connection pool এ রাখা হবে
 	db.SetConnMaxLifetime(5*time.Minute) // >> connection lifetime control. মানে: একটা connection 5 মিনিট পর expire হবে
 	DB = db
+	logger.AppLogger.Info.Print("Database Connected : ",DB)
 	fmt.Print("Database Connected")
 }
