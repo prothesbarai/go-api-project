@@ -25,16 +25,18 @@ This project is designed for learning and building scalable backend services.
 ---
 
 ## 📂 Project Structure - MVC Pattern
+```bash
 go-api-project/
 │── main.go
 │── database/
-│ └── connection.go
+│   └── connection.go
 │── routes/
-│ └── routes.go
+│   └── routes.go
 │── controllers/
 │── models/
 │── .env
 │── go.mod
+```
 
 
 ---
