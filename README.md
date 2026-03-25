@@ -71,6 +71,15 @@ if(port == ""){
 router.Run(":"+port)
 ```
 
+### 🚀 Server run হবে:
+
+```bash
+http://localhost:PORT_NUMBER/PATH
+or
+http://localhost:8080/products
+```
+
+
 ---
 
 ## 📧 Contact
