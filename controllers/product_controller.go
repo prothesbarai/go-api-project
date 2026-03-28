@@ -44,6 +44,13 @@ func GetProducts(ginCtx *gin.Context) {
 		products = append(products, p)
 	}
 
+
+	// >>> If Product is Null Then Data List Empty Array Return
+	if (products == nil) {
+    	products = []models.ProductModel{}
+	}
+
+
 	ginCtx.JSON(http.StatusOK,gin.H{
 		"data": products,
 		"limit": limitInt,
