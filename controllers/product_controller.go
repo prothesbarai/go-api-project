@@ -19,6 +19,15 @@ func GetProducts(ginCtx *gin.Context) {
 
 	offset := (pageInt - 1) * limitInt
 
+	// >> Get Total Product
+	var total int
+	err = database.DB.QueryRow("SELECT COUNT(*) FROM products").Scan(&total)
+	if(err != nil){
+		ginCtx.JSON(http.StatusInternalServerError,gin.H{"error" : err.Error()})
+		return
+	}
+
+	// >>> Fetch Product List With Pagination
 	rows, err := database.DB.Query("SELECT id,name,price FROM products LIMIT ? OFFSET ?",limitInt,offset)
 
 	if(err != nil){
@@ -39,5 +48,6 @@ func GetProducts(ginCtx *gin.Context) {
 		"data": products,
 		"limit": limitInt,
 		"page": pageInt,
+		"total":total,
 	})
 }
