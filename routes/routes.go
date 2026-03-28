@@ -9,5 +9,5 @@ func SetupRoutes(router *gin.Engine) {
 	router.GET("/products",controllers.GetProducts)
 
 	// >>> For Igoner Fav Icons
-	route.GET("/favicon.ico",func(ctx *gin.Context) {ctx.Status(204)})
+	router.GET("/favicon.ico",func(ctx *gin.Context) {ctx.Status(204)})
 }

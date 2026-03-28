@@ -4,11 +4,23 @@ import (
 	"go-api-project/database"
 	"go-api-project/models"
 	"net/http"
+	"strconv"
 	"github.com/gin-gonic/gin"
 )
 
 func GetProducts(ginCtx *gin.Context) {
-	rows, err := database.DB.Query("SELECT id,name,price FROM products")
+	page := ginCtx.DefaultQuery("page","1")
+	limit := ginCtx.DefaultQuery("limit","5")
+
+	pageInt , err := strconv.Atoi(page) // >>> Atoi means -> ASCII to integer
+	if(err != nil || pageInt < 1){	pageInt = 1}
+	limitInt , err := strconv.Atoi(limit)
+	if(err != nil || limitInt < 1){	limitInt = 5}
+
+	offset := (pageInt - 1) * limitInt
+
+	rows, err := database.DB.Query("SELECT id,name,price FROM products LIMIT ? OFFSET ?",limitInt,offset)
+
 	if(err != nil){
 		ginCtx.JSON(http.StatusInternalServerError,gin.H{"error" : err.Error()})
 		return
@@ -23,5 +35,9 @@ func GetProducts(ginCtx *gin.Context) {
 		products = append(products, p)
 	}
 
-	ginCtx.JSON(http.StatusOK,products)
+	ginCtx.JSON(http.StatusOK,gin.H{
+		"data": products,
+		"limit": limitInt,
+		"page": pageInt,
+	})
 }

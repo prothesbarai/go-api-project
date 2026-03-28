@@ -77,8 +77,16 @@ router.Run(":"+port)
 http://localhost:8080/products
 ```
 
+### With Pagination
+
 ```bash
-http://localhost:PORT_NUMBER/PATH
+http://localhost:5000/products?page=2&limit=4
+```
+
+### Format
+
+```bash
+http://localhost:PORT_NUMBER/PATH?QueryPerams
 ```
 
 ---
