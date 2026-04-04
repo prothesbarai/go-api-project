@@ -7,18 +7,12 @@ import (
 	"go-api-project/logger"
 	"os"
 	"time"
-	"github.com/joho/godotenv"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 var DB *sql.DB
 
 func ConnectionDB(){
-	// >>> First Load .env File
-	err := godotenv.Load()
-	if(err != nil){
-		logger.AppLogger.Error.Println("Error loading .env file",err)
-	}
 	/// >>> Then Get env file link
 	dsn := os.Getenv("DB_DSN")
 	fmt.Println(dsn)
@@ -27,6 +21,7 @@ func ConnectionDB(){
 	db,err := sql.Open("mysql",dsn)
 	if(err != nil){
 		logger.AppLogger.Error.Println("Database connection failed:",err)
+		os.Exit(1)
 	}
 
 	/// >>> For Production Purpose stablility
@@ -36,6 +31,7 @@ func ConnectionDB(){
 	/// >>> It won't work just by opening the connection, test the real connection. DB alive কিনা check
 	if err := db.PingContext(ctx); err != nil{
 		logger.AppLogger.Error.Println("Database unreachable:",err)
+		os.Exit(1)
 	}
  
 	db.SetMaxOpenConns(25) // >> max active connection limit. মানে: একসাথে maximum 25টা DB connection open হতে পারবে
